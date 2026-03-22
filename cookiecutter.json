@@ -3,5 +3,13 @@
     "repo_name": "my-ml-project",
     "description": "End-to-end ML project using Kedro and uv",
     "author_name": "Your Name",
-    "python_version": "3.11"
+    "python_version": "3.11",
+    "_copy_without_render": [
+        "*.py",
+        "*.yml",
+        "*.yaml",
+        "*.lock",
+        "*.html",
+        "*.csv"
+    ]
 }
