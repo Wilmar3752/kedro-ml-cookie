@@ -1,0 +1,12 @@
+titanic.data_processing:
+  target: survived
+  feature_columns:
+    - pclass
+    - sex
+    - age
+    - sibsp
+    - parch
+    - fare
+    - embarked
+  test_size: 0.2
+  random_state: 42

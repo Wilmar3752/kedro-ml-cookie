@@ -1,0 +1,25 @@
+titanic_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/titanic_model.pkl
+  versioned: true
+  metadata:
+    layer: 06_models
+
+titanic_study:
+  type: pickle.PickleDataset
+  filepath: data/06_models/titanic_study.pkl
+  versioned: true
+  metadata:
+    layer: 06_models
+
+titanic_predictions:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/titanic_predictions.csv
+  metadata:
+    layer: 07_model_output
+
+titanic_model_metrics:
+  type: json.JSONDataset
+  filepath: data/09_tracking/titanic_metrics.json
+  metadata:
+    layer: 09_tracking

@@ -1,0 +1,13 @@
+california.data_processing:
+  target: MedHouseVal
+  feature_columns:
+    - MedInc
+    - HouseAge
+    - AveRooms
+    - AveBedrms
+    - Population
+    - AveOccup
+    - Latitude
+    - Longitude
+  test_size: 0.2
+  random_state: 42

@@ -1,0 +1,82 @@
+[build-system]
+requires = ["uv_build>=0.9.21,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "src"
+module-name = ["packages", "modelling"]
+
+[project]
+name = "{{cookiecutter.repo_name}}"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">={{cookiecutter.python_version}}"
+
+dependencies = [
+    "kedro==1.1.1",
+    "kedro-datasets[pandas,pickle,json,text]>=4.1.0",
+    "pandas>=2.0.0,<3.0.0",
+    "numpy<=2.1",
+    "feature-engine==1.8.3",
+    "lightgbm>=4.0.0",
+    "optuna>=4.2.0",
+    "shap>=0.45.0",
+    "scikit-learn>=1.3.0",
+    "seaborn>=0.12.0",
+    "jinja2>=3.1.0",
+    "plotly>=5.0.0",
+]
+
+[project.scripts]
+"{{cookiecutter.repo_name}}" = "modelling.__main__:main"
+
+[project.entry-points."kedro.hooks"]
+
+[dependency-groups]
+dev = [
+    "jupyterlab>=4.0.0",
+    "kedro-viz>=7.0.0",
+    "isort>=5.0.0",
+    "ruff>=0.9.0",
+    "pytest~=7.2",
+    "pytest-cov~=3.0",
+    "pytest-mock>=1.7.1,<2.0",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+required-version = ">=0.9.21"
+
+[tool.kedro]
+package_name = "modelling"
+project_name = "{{cookiecutter.project_name}}"
+kedro_init_version = "1.0.0"
+tools = "['None']"
+example_pipeline = "False"
+source_dir = "src"
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+[tool.ruff]
+line-length = 88
+show-fixes = true
+
+[tool.ruff.lint]
+select = [
+    "F",    # Pyflakes
+    "W",    # pycodestyle
+    "E",    # pycodestyle
+    "I",    # isort
+    "UP",   # pyupgrade
+    "PL",   # Pylint
+]
+ignore = ["E501"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.kedro_telemetry]
+project_id = "{{cookiecutter.repo_name}}"

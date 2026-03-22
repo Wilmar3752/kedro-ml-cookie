@@ -1,0 +1,23 @@
+titanic_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/titanic.csv
+  metadata:
+    layer: 01_raw
+
+titanic_preprocessed:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/titanic_preprocessed.parquet
+  metadata:
+    layer: 03_primary
+
+titanic_train:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/titanic_train.parquet
+  metadata:
+    layer: 05_model_input
+
+titanic_test:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/titanic_test.parquet
+  metadata:
+    layer: 05_model_input

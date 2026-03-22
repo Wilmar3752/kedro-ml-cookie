@@ -1,0 +1,23 @@
+california_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/california_housing.csv
+  metadata:
+    layer: 01_raw
+
+california_preprocessed:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/california_preprocessed.parquet
+  metadata:
+    layer: 03_primary
+
+california_train:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/california_train.parquet
+  metadata:
+    layer: 05_model_input
+
+california_test:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/california_test.parquet
+  metadata:
+    layer: 05_model_input

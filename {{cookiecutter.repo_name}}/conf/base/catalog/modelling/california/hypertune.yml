@@ -1,0 +1,25 @@
+california_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/california_model.pkl
+  versioned: true
+  metadata:
+    layer: 06_models
+
+california_study:
+  type: pickle.PickleDataset
+  filepath: data/06_models/california_study.pkl
+  versioned: true
+  metadata:
+    layer: 06_models
+
+california_predictions:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/california_predictions.csv
+  metadata:
+    layer: 07_model_output
+
+california_model_metrics:
+  type: json.JSONDataset
+  filepath: data/09_tracking/california_metrics.json
+  metadata:
+    layer: 09_tracking

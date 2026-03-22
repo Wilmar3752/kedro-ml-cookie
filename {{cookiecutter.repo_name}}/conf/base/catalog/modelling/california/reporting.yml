@@ -1,0 +1,26 @@
+report_california_performance:
+  type: text.TextDataset
+  filepath: data/08_reporting/california/performance_report.html
+  fs_args:
+    open_args_save:
+      encoding: "utf-8"
+  metadata:
+    layer: 08_reporting
+
+report_california_interpretability:
+  type: text.TextDataset
+  filepath: data/08_reporting/california/interpretability_report.html
+  fs_args:
+    open_args_save:
+      encoding: "utf-8"
+  metadata:
+    layer: 08_reporting
+
+report_california_hypertune:
+  type: text.TextDataset
+  filepath: data/08_reporting/california/hypertune_report.html
+  fs_args:
+    open_args_save:
+      encoding: "utf-8"
+  metadata:
+    layer: 08_reporting

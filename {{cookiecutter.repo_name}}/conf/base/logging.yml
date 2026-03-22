@@ -1,0 +1,41 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  simple:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: simple
+    filename: info.log
+
+root:
+  level: INFO
+  handlers: [console, file]
+
+loggers:
+  kedro:
+    level: INFO
+    handlers: [console]
+    propagate: false
+  titanic:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+  packages:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+  optuna:
+    level: WARNING
+    handlers: [console]
+    propagate: false
