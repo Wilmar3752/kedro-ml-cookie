@@ -26,7 +26,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ## Usage
 
 ```bash
-cookiecutter gh:your-org/kedro-ml-cookie
+cookiecutter gh:Wilmar3752/kedro-ml-cookie
 ```
 
 Or from a local clone:
