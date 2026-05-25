@@ -15,10 +15,16 @@ env/
 # Kedro
 conf/local/
 !conf/local/.gitkeep
-data/**
+# Ignore derived data layers but track raw data and folder structure
+data/02_intermediate/*
+data/03_primary/*
+data/04_feature/*
+data/05_model_input/*
+data/06_models/*
+data/07_model_output/*
+data/08_reporting/*
+data/09_tracking/*
 !data/**/.gitkeep
-!data/01_raw/titanic.csv
-!data/01_raw/california_housing.csv
 mlruns/
 
 # Jupyter
