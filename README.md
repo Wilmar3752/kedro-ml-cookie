@@ -45,7 +45,13 @@ You will be prompted for:
 | `author_name` | `Your Name` | Author |
 | `python_version` | `3.11` | Python version for `requires-python` |
 
-After generation, `uv sync` runs automatically to create the virtual environment.
+After generation, navigate into the project and set it up manually:
+
+```bash
+cd <repo_name>
+git init
+uv sync
+```
 
 ---
 
@@ -80,9 +86,17 @@ After generation, `uv sync` runs automatically to create the virtual environment
 
 ```bash
 cd <repo_name>
+git init
+uv sync
 uv run kedro run                          # default: all pipelines
 uv run kedro run --pipeline e2e_titanic
 uv run kedro run --pipeline e2e_california
+```
+
+MLflow experiment tracking is enabled automatically. After a run:
+
+```bash
+.venv/bin/mlflow ui
 ```
 
 See the generated `README.md` inside the project for full documentation.
