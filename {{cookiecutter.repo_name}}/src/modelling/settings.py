@@ -1,9 +1,5 @@
 from kedro.config import OmegaConfigLoader
 
-from modelling.hooks import MLflowHook
-
-HOOKS = (MLflowHook(),)
-
 CONF_SOURCE = "conf"
 
 CONFIG_LOADER_CLASS = OmegaConfigLoader
@@ -16,5 +12,6 @@ CONFIG_LOADER_ARGS = {
         "catalog": ["catalog*", "catalog*/**", "**/catalog*"],
         "logging": ["logging*", "logging*/**", "**/logging*"],
         "credentials": ["credentials*", "credentials*/**", "**/credentials*"],
+        "mlflow": ["mlflow*"],
     },
 }

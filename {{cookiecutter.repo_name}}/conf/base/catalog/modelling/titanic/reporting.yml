@@ -1,26 +1,35 @@
 report_titanic_performance:
-  type: text.TextDataset
-  filepath: data/08_reporting/titanic/performance_report.html
-  fs_args:
-    open_args_save:
-      encoding: "utf-8"
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: text.TextDataset
+    filepath: data/08_reporting/titanic/performance_report.html
+    fs_args:
+      open_args_save:
+        encoding: "utf-8"
+  artifact_path: "reports/titanic"
   metadata:
     layer: 08_reporting
 
 report_titanic_interpretability:
-  type: text.TextDataset
-  filepath: data/08_reporting/titanic/interpretability_report.html
-  fs_args:
-    open_args_save:
-      encoding: "utf-8"
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: text.TextDataset
+    filepath: data/08_reporting/titanic/interpretability_report.html
+    fs_args:
+      open_args_save:
+        encoding: "utf-8"
+  artifact_path: "reports/titanic"
   metadata:
     layer: 08_reporting
 
 report_titanic_hypertune:
-  type: text.TextDataset
-  filepath: data/08_reporting/titanic/hypertune_report.html
-  fs_args:
-    open_args_save:
-      encoding: "utf-8"
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: text.TextDataset
+    filepath: data/08_reporting/titanic/hypertune_report.html
+    fs_args:
+      open_args_save:
+        encoding: "utf-8"
+  artifact_path: "reports/titanic"
   metadata:
     layer: 08_reporting

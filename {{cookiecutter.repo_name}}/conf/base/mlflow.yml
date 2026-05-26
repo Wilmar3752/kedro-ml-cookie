@@ -1,0 +1,26 @@
+server:
+  mlflow_tracking_uri: mlruns
+
+tracking:
+  disable_tracking:
+    pipelines: []
+
+  experiment:
+    name: {{cookiecutter.repo_name}}
+    restore_if_deleted: True
+
+  run:
+    id: null
+    name: null
+    nested: True
+
+  params:
+    dict_params:
+      flatten: True
+      recursive: True
+      sep: "."
+    long_params_strategy: tag
+
+ui:
+  port: "5000"
+  host: "127.0.0.1"

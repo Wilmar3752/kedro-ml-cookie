@@ -1,14 +1,20 @@
 titanic_model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/titanic_model.pkl
-  versioned: true
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pickle.PickleDataset
+    filepath: data/06_models/titanic_model.pkl
+    versioned: true
+  artifact_path: "models/titanic"
   metadata:
     layer: 06_models
 
 titanic_study:
-  type: pickle.PickleDataset
-  filepath: data/06_models/titanic_study.pkl
-  versioned: true
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pickle.PickleDataset
+    filepath: data/06_models/titanic_study.pkl
+    versioned: true
+  artifact_path: "models/titanic"
   metadata:
     layer: 06_models
 
