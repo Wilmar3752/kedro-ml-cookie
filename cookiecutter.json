@@ -1,6 +1,6 @@
 {
-    "project_name": "My ML Project",
     "repo_name": "my-ml-project",
+    "project_name": "{{ cookiecutter.repo_name.replace('-', ' ').replace('_', ' ').title() }}",
     "description": "End-to-end ML project using Kedro and uv",
     "author_name": "Your Name",
     "python_version": "3.11",
