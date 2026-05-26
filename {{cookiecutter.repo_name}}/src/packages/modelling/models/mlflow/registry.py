@@ -18,23 +18,26 @@ _INFERENCE_ONLY_ATTRS = {
 
 
 class MLflowModelStageManager(AbstractDataset):
-    """Kedro dataset that logs a sklearn model to the MLflow Model Registry.
+    """Kedro dataset that logs a sklearn model to the MLflow Model Registry using aliases.
+
+    MLflow 3.x replaced stages (Staging/Production) with aliases. This dataset
+    uses ``@challenger`` for newly trained models and ``@champion`` for promoted
+    production models, following MLflow 3.x best practices.
 
     On ``save``: logs the model via ``mlflow.sklearn.log_model``, registers it
-    under ``model_name``, and transitions it to ``save_stage``. Training-time
-    attributes (X_train, y_train, etc.) are stripped before logging so the
-    MLflow artifact stays small.
+    under ``model_name``, and assigns ``save_alias`` to the new version.
+    Training-time attributes are stripped before logging.
 
-    On ``load``: loads the model from the registry at ``load_stage``, falling
-    back to ``save_stage`` if the primary stage is unavailable.
+    On ``load``: loads the model from the registry using ``load_alias``,
+    falling back to ``save_alias`` if the primary alias is not set.
 
     In non-production environments the model name is prefixed with ``dev_``
     to prevent accidental promotion to production.
 
     Args:
         model_name: Name to register the model under in the MLflow registry.
-        load_stage: Registry stage to load from (default ``"Staging"``).
-        save_stage: Registry stage to transition to after logging (default ``"Staging"``).
+        load_alias: Alias to load from (default ``"champion"``).
+        save_alias: Alias to assign after logging (default ``"challenger"``).
         pyfunc_predict_fn: The predict function to expose via the pyfunc flavour.
         kedro_env: Current Kedro environment. Non-production envs prefix the
             model name with ``dev_``.
@@ -44,15 +47,15 @@ class MLflowModelStageManager(AbstractDataset):
     def __init__(
         self,
         model_name: str,
-        load_stage: str = "Staging",
-        save_stage: str = "Staging",
+        load_alias: str = "champion",
+        save_alias: str = "challenger",
         pyfunc_predict_fn: str = "predict",
         kedro_env: str = "base",
         production_envs: tp.List[str] = ["prd", "prod"],
     ) -> None:
         self.model_name = model_name
-        self.load_stage = load_stage
-        self.save_stage = save_stage
+        self.load_alias = load_alias
+        self.save_alias = save_alias
         self.pyfunc_predict_fn = pyfunc_predict_fn
         self.kedro_env = kedro_env
 
@@ -64,8 +67,8 @@ class MLflowModelStageManager(AbstractDataset):
             self.model_name = f"dev_{self.model_name}"
 
     def _load(self) -> tp.Any:
-        load_uri = f"models:/{self.model_name}/{self.load_stage}"
-        save_uri = f"models:/{self.model_name}/{self.save_stage}"
+        load_uri = f"models:/{self.model_name}@{self.load_alias}"
+        fallback_uri = f"models:/{self.model_name}@{self.save_alias}"
 
         os.environ["TQDM_DISABLE"] = "1"
         os.environ["MLFLOW_ENABLE_ARTIFACTS_PROGRESS_BAR"] = "false"
@@ -74,9 +77,9 @@ class MLflowModelStageManager(AbstractDataset):
                 return mlflow.pyfunc.load_model(load_uri)
             except Exception:
                 logger.warning(
-                    f"Could not load from {load_uri}, falling back to {save_uri}."
+                    f"Could not load from '{load_uri}', falling back to '{fallback_uri}'."
                 )
-                return mlflow.pyfunc.load_model(save_uri)
+                return mlflow.pyfunc.load_model(fallback_uri)
         finally:
             os.environ.pop("TQDM_DISABLE", None)
             os.environ.pop("MLFLOW_ENABLE_ARTIFACTS_PROGRESS_BAR", None)
@@ -91,7 +94,7 @@ class MLflowModelStageManager(AbstractDataset):
         os.environ["TQDM_DISABLE"] = "1"
         os.environ["MLFLOW_ENABLE_ARTIFACTS_PROGRESS_BAR"] = "false"
         try:
-            mlflow.sklearn.log_model(
+            model_info = mlflow.sklearn.log_model(
                 name=self.model_name,
                 sk_model=model_copy,
                 registered_model_name=self.model_name,
@@ -104,25 +107,29 @@ class MLflowModelStageManager(AbstractDataset):
 
         client = MlflowClient()
         try:
-            versions = client.get_latest_versions(self.model_name, stages=["None"])
-            latest_version = int(versions[0].version)
-            client.transition_model_version_stage(
+            # Get the version that was just registered from model_info
+            registered_model = client.get_registered_model(self.model_name)
+            latest_version = max(
+                int(v.version)
+                for v in client.search_model_versions(f"name='{self.model_name}'")
+            )
+            client.set_registered_model_alias(
                 name=self.model_name,
+                alias=self.save_alias,
                 version=latest_version,
-                stage=self.save_stage,
             )
             logger.info(
-                f"Model '{self.model_name}' v{latest_version} transitioned to '{self.save_stage}'."
+                f"Model '{self.model_name}' v{latest_version} assigned alias '@{self.save_alias}'."
             )
         except Exception as e:
             logger.warning(
-                f"Model was logged but stage transition failed for '{self.model_name}': {e}"
+                f"Model was logged but alias assignment failed for '{self.model_name}': {e}"
             )
 
     def _describe(self) -> tp.Dict[str, tp.Any]:
         return {
             "model_name": self.model_name,
-            "load_stage": self.load_stage,
-            "save_stage": self.save_stage,
+            "load_alias": self.load_alias,
+            "save_alias": self.save_alias,
             "pyfunc_predict_fn": self.pyfunc_predict_fn,
         }

@@ -19,8 +19,8 @@ california_study:
 california_registered_model:
   type: packages.modelling.models.mlflow.registry.MLflowModelStageManager
   model_name: california
-  load_stage: Staging
-  save_stage: Staging
+  load_alias: champion
+  save_alias: challenger
   pyfunc_predict_fn: predict
 
 california_predictions:
