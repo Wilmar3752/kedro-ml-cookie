@@ -27,3 +27,5 @@ if __name__ == "__main__":
             file=sys.stderr,
             flush=True,
         )
+
+    print(f"\n✅ Project ready! Navigate into it with:\n\n   cd {PROJECT_DIR.name}\n", flush=True)
