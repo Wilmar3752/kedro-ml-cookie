@@ -11,18 +11,19 @@ def run(cmd: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    print(f"Entering project directory: {PROJECT_DIR}")
+    print(f"Entering project directory: {PROJECT_DIR}", flush=True)
     os.chdir(PROJECT_DIR)
 
-    print("Initialising git repository...")
+    print("Initialising git repository...", flush=True)
     rc = run(["git", "init"])
     if rc != 0:
-        print("Warning: 'git init' failed.", file=sys.stderr)
+        print("Warning: 'git init' failed.", file=sys.stderr, flush=True)
 
-    print("Running uv sync...")
+    print("Running uv sync...", flush=True)
     rc = run(["uv", "sync"])
     if rc != 0:
         print(
             "Warning: 'uv sync' failed. Run it manually inside the project directory.",
             file=sys.stderr,
+            flush=True,
         )
