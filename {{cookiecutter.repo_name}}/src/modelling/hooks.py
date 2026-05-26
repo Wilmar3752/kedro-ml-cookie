@@ -24,6 +24,7 @@ class MLflowHook:
     @hook_impl
     def before_pipeline_run(self, run_params: dict, pipeline, catalog) -> None:
         pipeline_name = run_params.get("pipeline_name") or "default"
+        mlflow.set_tracking_uri("mlruns")
         mlflow.set_experiment(pipeline_name)
         mlflow.start_run(run_name=run_params.get("run_id"))
         mlflow.set_tags(
