@@ -18,6 +18,15 @@ titanic_study:
   metadata:
     layer: 06_models
 
+titanic_registered_model:
+  type: packages.modelling.models.mlflow.registry.MLflowModelStageManager
+  model_name: titanic
+  load_stage: Staging
+  save_stage: Staging
+  pyfunc_predict_fn: predict
+  metadata:
+    layer: 06_models
+
 titanic_predictions:
   type: pandas.CSVDataset
   filepath: data/07_model_output/titanic_predictions.csv

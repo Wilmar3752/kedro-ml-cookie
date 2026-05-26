@@ -103,6 +103,20 @@ def predict_california(
     return predictions
 
 
+def register_california_model(
+    pipeline: RegressionSklearnPipeline,
+) -> RegressionSklearnPipeline:
+    """Pass the trained model to the MLflow Model Registry via the catalog.
+
+    Args:
+        pipeline: Fitted ``RegressionSklearnPipeline``.
+
+    Returns:
+        The same pipeline (unchanged).
+    """
+    return pipeline
+
+
 def extract_california_study(
     pipeline: RegressionSklearnPipeline,
 ):

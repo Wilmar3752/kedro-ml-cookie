@@ -4,6 +4,7 @@ from modelling.titanic.hypertune.nodes import (
     evaluate_titanic_model,
     extract_titanic_study,
     predict_titanic,
+    register_titanic_model,
     train_titanic_model,
 )
 
@@ -50,6 +51,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="titanic_study",
                 name="extract_titanic_study_node",
                 tags=["hypertune"],
+            ),
+            node(
+                func=register_titanic_model,
+                inputs="titanic_model",
+                outputs="titanic_registered_model",
+                name="register_titanic_model_node",
+                tags=["hypertune", "registry"],
             ),
         ]
     )

@@ -4,6 +4,7 @@ from modelling.california.hypertune.nodes import (
     evaluate_california_model,
     extract_california_study,
     predict_california,
+    register_california_model,
     train_california_model,
 )
 
@@ -50,6 +51,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="california_study",
                 name="extract_california_study_node",
                 tags=["california"],
+            ),
+            node(
+                func=register_california_model,
+                inputs="california_model",
+                outputs="california_registered_model",
+                name="register_california_model_node",
+                tags=["california", "registry"],
             ),
         ]
     )

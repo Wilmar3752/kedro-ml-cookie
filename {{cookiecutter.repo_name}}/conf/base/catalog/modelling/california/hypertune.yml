@@ -18,6 +18,15 @@ california_study:
   metadata:
     layer: 06_models
 
+california_registered_model:
+  type: packages.modelling.models.mlflow.registry.MLflowModelStageManager
+  model_name: california
+  load_stage: Staging
+  save_stage: Staging
+  pyfunc_predict_fn: predict
+  metadata:
+    layer: 06_models
+
 california_predictions:
   type: pandas.CSVDataset
   filepath: data/07_model_output/california_predictions.csv

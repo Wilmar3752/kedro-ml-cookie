@@ -137,6 +137,24 @@ def predict_titanic(
     return predictions
 
 
+def register_titanic_model(
+    pipeline: BinaryClassifierSklearnPipeline,
+) -> BinaryClassifierSklearnPipeline:
+    """Pass the trained model to the MLflow Model Registry via the catalog.
+
+    The actual registration logic lives in
+    ``MLflowModelStageManager._save``; this node simply routes the model
+    object to the ``titanic_registered_model`` catalog entry.
+
+    Args:
+        pipeline: Fitted ``BinaryClassifierSklearnPipeline``.
+
+    Returns:
+        The same pipeline (unchanged).
+    """
+    return pipeline
+
+
 def extract_titanic_study(
     pipeline: BinaryClassifierSklearnPipeline,
 ):
