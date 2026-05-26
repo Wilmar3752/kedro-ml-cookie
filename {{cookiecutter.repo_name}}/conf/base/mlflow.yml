@@ -6,7 +6,7 @@ tracking:
     pipelines: []
 
   experiment:
-    name: {{cookiecutter.repo_name}}
+    name: ml_project
     restore_if_deleted: True
 
   run:

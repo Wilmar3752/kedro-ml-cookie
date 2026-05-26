@@ -3,7 +3,6 @@ titanic_model:
   dataset:
     type: pickle.PickleDataset
     filepath: data/06_models/titanic_model.pkl
-    versioned: true
   artifact_path: "models/titanic"
   metadata:
     layer: 06_models
@@ -13,7 +12,6 @@ titanic_study:
   dataset:
     type: pickle.PickleDataset
     filepath: data/06_models/titanic_study.pkl
-    versioned: true
   artifact_path: "models/titanic"
   metadata:
     layer: 06_models
@@ -24,8 +22,6 @@ titanic_registered_model:
   load_stage: Staging
   save_stage: Staging
   pyfunc_predict_fn: predict
-  metadata:
-    layer: 06_models
 
 titanic_predictions:
   type: pandas.CSVDataset
